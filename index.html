@@ -51,10 +51,14 @@
   /* what-is */
   .whatis{display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center}
   @media(max-width:760px){.whatis{grid-template-columns:1fr}}
-  .speech{background:var(--card); border:1px solid var(--card-bd); border-radius:20px; padding:28px 30px}
-  .speech p{margin-bottom:14px} .speech p:last-child{margin-bottom:0}
-  .speech .q{color:var(--accent2); font-weight:700}
-  .speech .a{color:var(--ink)}
+
+  /* faq card (left) */
+  .faq{background:var(--card); border:1px solid var(--card-bd); border-radius:20px; overflow:hidden}
+  .faq-item{padding:24px 28px; border-bottom:1px solid var(--card-bd)}
+  .faq-item:last-child{border-bottom:none}
+  .faq-q{display:flex; align-items:center; gap:12px; font-size:17px; font-weight:700; color:var(--ink); margin-bottom:10px}
+  .faq-q .qi{flex:none; width:34px; height:34px; border-radius:10px; background:rgba(124,92,255,.18); display:flex; align-items:center; justify-content:center; font-size:18px}
+  .faq-a{font-size:15px; color:var(--muted); padding-left:46px}
 
   /* dimension cards */
   .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px}
@@ -94,15 +98,18 @@
     background:linear-gradient(100deg,var(--accent),var(--accent2)); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px; color:#fff}
   .step h3{margin:14px 0 8px; font-size:18px}
   .step p{color:var(--muted); font-size:15px}
-  .step .say{display:inline-block; margin-top:12px; font-family:"SF Mono",Consolas,monospace; font-size:14px; background:rgba(34,211,238,.12); color:#7dd3fc; padding:6px 12px; border-radius:8px}
+  .say{display:inline-block; margin-top:12px; font-family:"SF Mono",Consolas,monospace; font-size:14px; background:rgba(34,211,238,.12); color:#7dd3fc; padding:6px 12px; border-radius:8px}
 
-  /* qr */
-  .qr-card{display:flex; gap:36px; align-items:center; justify-content:center; flex-wrap:wrap; background:var(--card); border:1px solid var(--card-bd); border-radius:24px; padding:40px; max-width:680px; margin:0 auto}
-  .qr-box{background:#fff; border-radius:18px; padding:16px; line-height:0; box-shadow:0 10px 40px rgba(0,0,0,.3)}
-  .qr-meta{text-align:left; max-width:300px}
-  .qr-meta .label{font-size:14px; color:var(--muted); margin-bottom:8px}
-  .qr-url{display:block; font-family:"SF Mono",Consolas,monospace; font-size:15px; color:#7dd3fc; margin-bottom:20px; word-break:break-all; text-decoration:none}
-  .qr-url:hover{text-decoration:underline}
+  /* install */
+  .install{max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:18px}
+  .ins-step{display:flex; gap:18px; align-items:flex-start; background:var(--card); border:1px solid var(--card-bd); border-radius:18px; padding:26px 28px}
+  .ins-n{flex:none; width:40px; height:40px; border-radius:12px; background:linear-gradient(100deg,var(--accent),var(--accent2)); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px; color:#fff}
+  .ins-step h3{font-size:18px; margin-bottom:6px}
+  .ins-step p{color:var(--muted); font-size:15px; margin-bottom:10px}
+  .ins-link{display:inline-block; color:#7dd3fc; text-decoration:none; font-size:14px; font-family:"SF Mono",Consolas,monospace}
+  .ins-link:hover{text-decoration:underline}
+  .code{font-family:"SF Mono",Consolas,monospace; font-size:13px; background:rgba(0,0,0,.28); border:1px solid var(--card-bd); border-radius:10px; padding:12px 14px; color:#a9b2d0; line-height:2}
+  .code b{color:#c4b5ff; font-weight:500}
 
   /* reveal */
   .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease}
@@ -117,7 +124,7 @@
 <header class="hero">
   <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
   <div class="hero-inner wrap">
-    <span class="pill">AI 技能质量医生 · v2.0</span>
+    <span class="pill">AI 技能质量医生</span>
     <div class="logo">🩺</div>
     <h1>Skill Doctor</h1>
     <p class="tagline">给你的 AI 技能做一次全面体检</p>
@@ -135,16 +142,25 @@
     <h2 class="reveal">这是干嘛的？</h2>
     <p class="lead reveal">如果"技能（Skill）"是你写给 AI 的一份操作说明书，那 Skill Doctor 就是给这份说明书看病的医生。</p>
     <div class="whatis">
-      <div class="speech reveal">
-        <p><span class="q">🤔 什么是 Skill？</span><br><span class="a">一份告诉 AI"遇到这种活儿该怎么干"的说明书。写好了，AI 自动照做；写砸了，AI 要么想不起来用、要么干错。</span></p>
-        <p><span class="q">😵 常见的"病"？</span><br><span class="a">触发词没写对没人叫得动它；步骤含糊 AI 全靠猜；附带的脚本路径写死了换台电脑就崩；说明书 300 行没人维护得动。</span></p>
-        <p><span class="q">🩺 Doctor 怎么治？</span><br><span class="a">4 个维度打分体检 → 指出问题 → 你说一句"优化"，它直接帮你改好、缺的部分补齐。</span></p>
+      <div class="faq reveal">
+        <div class="faq-item">
+          <div class="faq-q"><span class="qi">🤔</span>什么是 Skill？</div>
+          <div class="faq-a">一份告诉 AI"遇到这种活儿该怎么干"的说明书。写好了 AI 自动照做；写砸了，AI 要么想不起来用、要么干错。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span class="qi">😵</span>常见的"病"？</div>
+          <div class="faq-a">触发词没写对，没人叫得动它；步骤含糊，AI 全靠猜；脚本路径写死，换台电脑就崩；说明书 300 行，没人维护得动。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><span class="qi">🩺</span>Doctor 怎么治？</div>
+          <div class="faq-a">4 个维度打分体检 → 指出问题 → 你说一句"优化"，它直接帮你改好、缺的部分补齐。</div>
+        </div>
       </div>
       <div class="grid reveal">
-        <div class="card"><div class="ico">📣</div><h3>触发精确性</h3><div class="w">该不该被叫到</div><p>名字和描述写对，AI 才会在对的时机自动用它。</p></div>
+        <div class="card"><div class="ico">📣</div><h3>触发精确性</h3><div class="w">能不能被唤醒</div><p>名字和描述写对，AI 才会在对的时机自动用它。</p></div>
         <div class="card"><div class="ico">🧭</div><h3>理解精确性</h3><div class="w">AI 会不会猜错</div><p>步骤、分支、引用都清清楚楚，AI 不用瞎猜。</p></div>
         <div class="card"><div class="ico">⚙️</div><h3>执行稳定性</h3><div class="w">到底跑不跑得通</div><p>文件齐不齐、脚本崩不崩、输出对不对——真跑一遍验。</p></div>
-        <div class="card"><div class="ico">🧱</div><h3>经济性</h3><div class="w">好不好长期用</div><p>不写死、能换机器、结构清爽，方便以后维护和复用。</p></div>
+        <div class="card"><div class="ico">🧱</div><h3>经济性</h3><div class="w">能不能更多人复用</div><p>不写死、能换机器、结构清爽，方便以后维护和复用。</p></div>
       </div>
     </div>
   </div>
@@ -194,19 +210,35 @@
   </div>
 </section>
 
-<section id="qr">
+<section id="install">
   <div class="wrap">
-    <p class="eyebrow reveal">扫码即看</p>
-    <h2 class="reveal">手机扫一扫</h2>
-    <p class="lead reveal">扫码或点链接，在任意设备上打开本页，方便转发到群里。</p>
-    <div class="qr-card reveal">
-      <div class="qr-box">
-        <svg viewBox="0 0 37 37" width="200" height="200" xmlns="http://www.w3.org/2000/svg"><path d="M2,2H3V3H2zM3,2H4V3H3zM4,2H5V3H4zM5,2H6V3H5zM6,2H7V3H6zM7,2H8V3H7zM8,2H9V3H8zM12,2H13V3H12zM14,2H15V3H14zM20,2H21V3H20zM21,2H22V3H21zM22,2H23V3H22zM23,2H24V3H23zM25,2H26V3H25zM28,2H29V3H28zM29,2H30V3H29zM30,2H31V3H30zM31,2H32V3H31zM32,2H33V3H32zM33,2H34V3H33zM34,2H35V3H34zM2,3H3V4H2zM8,3H9V4H8zM12,3H13V4H12zM14,3H15V4H14zM17,3H18V4H17zM18,3H19V4H18zM20,3H21V4H20zM22,3H23V4H22zM23,3H24V4H23zM28,3H29V4H28zM34,3H35V4H34zM2,4H3V5H2zM4,4H5V5H4zM5,4H6V5H5zM6,4H7V5H6zM8,4H9V5H8zM10,4H11V5H10zM11,4H12V5H11zM13,4H14V5H13zM16,4H17V5H16zM18,4H19V5H18zM21,4H22V5H21zM22,4H23V5H22zM23,4H24V5H23zM24,4H25V5H24zM25,4H26V5H25zM28,4H29V5H28zM30,4H31V5H30zM31,4H32V5H31zM32,4H33V5H32zM34,4H35V5H34zM2,5H3V6H2zM4,5H5V6H4zM5,5H6V6H5zM6,5H7V6H6zM8,5H9V6H8zM10,5H11V6H10zM11,5H12V6H11zM20,5H21V6H20zM23,5H24V6H23zM25,5H26V6H25zM26,5H27V6H26zM28,5H29V6H28zM30,5H31V6H30zM31,5H32V6H31zM32,5H33V6H32zM34,5H35V6H34zM2,6H3V7H2zM4,6H5V7H4zM5,6H6V7H5zM6,6H7V7H6zM8,6H9V7H8zM10,6H11V7H10zM11,6H12V7H11zM15,6H16V7H15zM16,6H17V7H16zM17,6H18V7H17zM18,6H19V7H18zM19,6H20V7H19zM22,6H23V7H22zM24,6H25V7H24zM28,6H29V7H28zM30,6H31V7H30zM31,6H32V7H31zM32,6H33V7H32zM34,6H35V7H34zM2,7H3V8H2zM8,7H9V8H8zM10,7H11V8H10zM11,7H12V8H11zM12,7H13V8H12zM15,7H16V8H15zM16,7H17V8H16zM20,7H21V8H20zM21,7H22V8H21zM24,7H25V8H24zM25,7H26V8H25zM26,7H27V8H26zM28,7H29V8H28zM34,7H35V8H34zM2,8H3V9H2zM3,8H4V9H3zM4,8H5V9H4zM5,8H6V9H5zM6,8H7V9H6zM7,8H8V9H7zM8,8H9V9H8zM10,8H11V9H10zM12,8H13V9H12zM14,8H15V9H14zM16,8H17V9H16zM18,8H19V9H18zM20,8H21V9H20zM22,8H23V9H22zM24,8H25V9H24zM26,8H27V9H26zM28,8H29V9H28zM29,8H30V9H29zM30,8H31V9H30zM31,8H32V9H31zM32,8H33V9H32zM33,8H34V9H33zM34,8H35V9H34zM10,9H11V10H10zM13,9H14V10H13zM14,9H15V10H14zM16,9H17V10H16zM18,9H19V10H18zM21,9H22V10H21zM22,9H23V10H22zM23,9H24V10H23zM25,9H26V10H25zM2,10H3V11H2zM4,10H5V11H4zM5,10H6V11H5zM6,10H7V11H6zM7,10H8V11H7zM8,10H9V11H8zM11,10H12V11H11zM13,10H14V11H13zM14,10H15V11H14zM15,10H16V11H15zM16,10H17V11H16zM19,10H20V11H19zM21,10H22V11H21zM24,10H25V11H24zM25,10H26V11H25zM26,10H27V11H26zM28,10H29V11H28zM29,10H30V11H29zM30,10H31V11H30zM31,10H32V11H31zM32,10H33V11H32zM2,11H3V12H2zM3,11H4V12H3zM4,11H5V12H4zM5,11H6V12H5zM6,11H7V12H6zM9,11H10V12H9zM10,11H11V12H10zM11,11H12V12H11zM14,11H15V12H14zM15,11H16V12H15zM16,11H17V12H16zM18,11H19V12H18zM19,11H20V12H19zM21,11H22V12H21zM22,11H23V12H22zM24,11H25V12H24zM25,11H26V12H25zM28,11H29V12H28zM29,11H30V12H29zM31,11H32V12H31zM32,11H33V12H32zM34,11H35V12H34zM2,12H3V13H2zM3,12H4V13H3zM4,12H5V13H4zM8,12H9V13H8zM9,12H10V13H9zM10,12H11V13H10zM11,12H12V13H11zM12,12H13V13H12zM13,12H14V13H13zM14,12H15V13H14zM15,12H16V13H15zM16,12H17V13H16zM17,12H18V13H17zM18,12H19V13H18zM19,12H20V13H19zM24,12H25V13H24zM26,12H27V13H26zM30,12H31V13H30zM32,12H33V13H32zM33,12H34V13H33zM2,13H3V14H2zM5,13H6V14H5zM7,13H8V14H7zM12,13H13V14H12zM13,13H14V14H13zM14,13H15V14H14zM15,13H16V14H15zM17,13H18V14H17zM19,13H20V14H19zM20,13H21V14H20zM21,13H22V14H21zM22,13H23V14H22zM25,13H26V14H25zM26,13H27V14H26zM27,13H28V14H27zM28,13H29V14H28zM30,13H31V14H30zM31,13H32V14H31zM32,13H33V14H32zM33,13H34V14H33zM4,14H5V15H4zM6,14H7V15H6zM8,14H9V15H8zM10,14H11V15H10zM12,14H13V15H12zM13,14H14V15H13zM16,14H17V15H16zM18,14H19V15H18zM21,14H22V15H21zM22,14H23V15H22zM23,14H24V15H23zM24,14H25V15H24zM26,14H27V15H26zM27,14H28V15H27zM29,14H30V15H29zM30,14H31V15H30zM31,14H32V15H31zM34,14H35V15H34zM2,15H3V16H2zM3,15H4V16H3zM4,15H5V16H4zM5,15H6V16H5zM14,15H15V16H14zM15,15H16V16H15zM17,15H18V16H17zM20,15H21V16H20zM23,15H24V16H23zM26,15H27V16H26zM27,15H28V16H27zM28,15H29V16H28zM31,15H32V16H31zM33,15H34V16H33zM34,15H35V16H34zM3,16H4V17H3zM6,16H7V17H6zM7,16H8V17H7zM8,16H9V17H8zM9,16H10V17H9zM10,16H11V17H10zM14,16H15V17H14zM16,16H17V17H16zM17,16H18V17H17zM18,16H19V17H18zM22,16H23V17H22zM24,16H25V17H24zM27,16H28V17H27zM28,16H29V17H28zM30,16H31V17H30zM32,16H33V17H32zM33,16H34V17H33zM2,17H3V18H2zM3,17H4V18H3zM5,17H6V18H5zM10,17H11V18H10zM11,17H12V18H11zM12,17H13V18H12zM17,17H18V18H17zM20,17H21V18H20zM23,17H24V18H23zM24,17H25V18H24zM25,17H26V18H25zM27,17H28V18H27zM28,17H29V18H28zM30,17H31V18H30zM31,17H32V18H31zM32,17H33V18H32zM2,18H3V19H2zM4,18H5V19H4zM5,18H6V19H5zM8,18H9V19H8zM9,18H10V19H9zM12,18H13V19H12zM13,18H14V19H13zM15,18H16V19H15zM17,18H18V19H17zM19,18H20V19H19zM24,18H25V19H24zM25,18H26V19H25zM27,18H28V19H27zM29,18H30V19H29zM30,18H31V19H30zM34,18H35V19H34zM2,19H3V20H2zM4,19H5V20H4zM5,19H6V20H5zM7,19H8V20H7zM9,19H10V20H9zM12,19H13V20H12zM14,19H15V20H14zM15,19H16V20H15zM16,19H17V20H16zM18,19H19V20H18zM20,19H21V20H20zM21,19H22V20H21zM23,19H24V20H23zM25,19H26V20H25zM27,19H28V20H27zM28,19H29V20H28zM29,19H30V20H29zM31,19H32V20H31zM32,19H33V20H32zM34,19H35V20H34zM3,20H4V21H3zM5,20H6V21H5zM6,20H7V21H6zM7,20H8V21H7zM8,20H9V21H8zM10,20H11V21H10zM11,20H12V21H11zM12,20H13V21H12zM16,20H17V21H16zM17,20H18V21H17zM20,20H21V21H20zM22,20H23V21H22zM23,20H24V21H23zM27,20H28V21H27zM29,20H30V21H29zM30,20H31V21H30zM32,20H33V21H32zM33,20H34V21H33zM5,21H6V22H5zM6,21H7V22H6zM12,21H13V22H12zM14,21H15V22H14zM15,21H16V22H15zM18,21H19V22H18zM21,21H22V22H21zM22,21H23V22H22zM23,21H24V22H23zM24,21H25V22H24zM26,21H27V22H26zM29,21H30V22H29zM30,21H31V22H30zM31,21H32V22H31zM32,21H33V22H32zM33,21H34V22H33zM34,21H35V22H34zM3,22H4V23H3zM4,22H5V23H4zM5,22H6V23H5zM7,22H8V23H7zM8,22H9V23H8zM12,22H13V23H12zM13,22H14V23H13zM14,22H15V23H14zM20,22H21V23H20zM23,22H24V23H23zM26,22H27V23H26zM27,22H28V23H27zM29,22H30V23H29zM30,22H31V23H30zM31,22H32V23H31zM34,22H35V23H34zM2,23H3V24H2zM3,23H4V24H3zM4,23H5V24H4zM5,23H6V24H5zM6,23H7V24H6zM11,23H12V24H11zM15,23H16V24H15zM16,23H17V24H16zM17,23H18V24H17zM18,23H19V24H18zM19,23H20V24H19zM22,23H23V24H22zM23,23H24V24H23zM24,23H25V24H24zM25,23H26V24H25zM26,23H27V24H26zM28,23H29V24H28zM31,23H32V24H31zM34,23H35V24H34zM2,24H3V25H2zM6,24H7V25H6zM8,24H9V25H8zM9,24H10V25H9zM10,24H11V25H10zM12,24H13V25H12zM13,24H14V25H13zM15,24H16V25H15zM20,24H21V25H20zM21,24H22V25H21zM23,24H24V25H23zM26,24H27V25H26zM29,24H30V25H29zM32,24H33V25H32zM33,24H34V25H33zM2,25H3V26H2zM6,25H7V26H6zM7,25H8V26H7zM9,25H10V26H9zM13,25H14V26H13zM14,25H15V26H14zM15,25H16V26H15zM16,25H17V26H16zM18,25H19V26H18zM20,25H21V26H20zM21,25H22V26H21zM22,25H23V26H22zM23,25H24V26H23zM24,25H25V26H24zM25,25H26V26H25zM26,25H27V26H26zM27,25H28V26H27zM28,25H29V26H28zM32,25H33V26H32zM33,25H34V26H33zM34,25H35V26H34zM2,26H3V27H2zM6,26H7V27H6zM8,26H9V27H8zM9,26H10V27H9zM12,26H13V27H12zM13,26H14V27H13zM15,26H16V27H15zM19,26H20V27H19zM21,26H22V27H21zM22,26H23V27H22zM24,26H25V27H24zM26,26H27V27H26zM27,26H28V27H27zM28,26H29V27H28zM29,26H30V27H29zM30,26H31V27H30zM34,26H35V27H34zM10,27H11V28H10zM15,27H16V28H15zM19,27H20V28H19zM21,27H22V28H21zM26,27H27V28H26zM30,27H31V28H30zM32,27H33V28H32zM34,27H35V28H34zM2,28H3V29H2zM3,28H4V29H3zM4,28H5V29H4zM5,28H6V29H5zM6,28H7V29H6zM7,28H8V29H7zM8,28H9V29H8zM13,28H14V29H13zM14,28H15V29H14zM15,28H16V29H15zM17,28H18V29H17zM19,28H20V29H19zM22,28H23V29H22zM24,28H25V29H24zM25,28H26V29H25zM26,28H27V29H26zM28,28H29V29H28zM30,28H31V29H30zM32,28H33V29H32zM33,28H34V29H33zM2,29H3V30H2zM8,29H9V30H8zM10,29H11V30H10zM12,29H13V30H12zM13,29H14V30H13zM14,29H15V30H14zM19,29H20V30H19zM20,29H21V30H20zM21,29H22V30H21zM22,29H23V30H22zM25,29H26V30H25zM26,29H27V30H26zM30,29H31V30H30zM31,29H32V30H31zM32,29H33V30H32zM33,29H34V30H33zM34,29H35V30H34zM2,30H3V31H2zM4,30H5V31H4zM5,30H6V31H5zM6,30H7V31H6zM8,30H9V31H8zM10,30H11V31H10zM11,30H12V31H11zM12,30H13V31H12zM13,30H14V31H13zM14,30H15V31H14zM16,30H17V31H16zM17,30H18V31H17zM18,30H19V31H18zM22,30H23V31H22zM23,30H24V31H23zM24,30H25V31H24zM26,30H27V31H26zM27,30H28V31H27zM28,30H29V31H28zM29,30H30V31H29zM30,30H31V31H30zM31,30H32V31H31zM2,31H3V32H2zM4,31H5V32H4zM5,31H6V32H5zM6,31H7V32H6zM8,31H9V32H8zM10,31H11V32H10zM13,31H14V32H13zM14,31H15V32H14zM17,31H18V32H17zM20,31H21V32H20zM26,31H27V32H26zM27,31H28V32H27zM30,31H31V32H30zM31,31H32V32H31zM34,31H35V32H34zM2,32H3V33H2zM4,32H5V33H4zM5,32H6V33H5zM6,32H7V33H6zM8,32H9V33H8zM10,32H11V33H10zM11,32H12V33H11zM12,32H13V33H12zM13,32H14V33H13zM16,32H17V33H16zM17,32H18V33H17zM18,32H19V33H18zM22,32H23V33H22zM24,32H25V33H24zM28,32H29V33H28zM29,32H30V33H29zM31,32H32V33H31zM32,32H33V33H32zM2,33H3V34H2zM8,33H9V34H8zM11,33H12V34H11zM12,33H13V34H12zM13,33H14V34H13zM14,33H15V34H14zM17,33H18V34H17zM23,33H24V34H23zM25,33H26V34H25zM27,33H28V34H27zM28,33H29V34H28zM30,33H31V34H30zM31,33H32V34H31zM32,33H33V34H32zM2,34H3V35H2zM3,34H4V35H3zM4,34H5V35H4zM5,34H6V35H5zM6,34H7V35H6zM7,34H8V35H7zM8,34H9V35H8zM10,34H11V35H10zM14,34H15V35H14zM17,34H18V35H17zM19,34H20V35H19zM24,34H25V35H24zM25,34H26V35H25zM26,34H27V35H26zM27,34H28V35H27zM28,34H29V35H28zM29,34H30V35H29zM33,34H34V35H33z" fill="#0b1020"/></svg>
+    <p class="eyebrow reveal">动手用起来</p>
+    <h2 class="reveal">怎么安装？</h2>
+    <p class="lead reveal">把 skill-doctor 文件夹放进你的 skills 目录，三步搞定。</p>
+    <div class="install">
+      <div class="ins-step reveal">
+        <div class="ins-n">1</div>
+        <div>
+          <h3>下载技能文件</h3>
+          <p>获取 <code>skill-doctor</code> 文件夹（含 SKILL.md 和 references/）。点开仓库 → Code → Download ZIP，解压即可。</p>
+          <a class="ins-link" href="https://github.com/sharonwang7/skill-doctor/tree/main/skill-doctor">github.com/sharonwang7/skill-doctor ↗</a>
+        </div>
       </div>
-      <div class="qr-meta">
-        <div class="label">网址</div>
-        <a class="qr-url" href="https://sharonwang7.github.io/skill-doctor/">sharonwang7.github.io/skill-doctor</a>
-        <a class="btn btn-main" href="https://sharonwang7.github.io/skill-doctor/">打开网页 →</a>
+      <div class="ins-step reveal">
+        <div class="ins-n">2</div>
+        <div>
+          <h3>放进 skills 目录</h3>
+          <p>把整个 <code>skill-doctor</code> 文件夹拷到你的技能目录下：</p>
+          <div class="code"><b>Claude Code</b> ：~/.claude/skills/skill-doctor/<br><b>凡岛 / OpenClaw</b> ：&lt;安装目录&gt;/skills/skill-doctor/</div>
+        </div>
+      </div>
+      <div class="ins-step reveal">
+        <div class="ins-n">3</div>
+        <div>
+          <h3>开口就能用</h3>
+          <p>重开对话，把一个技能丢给它，说一句话即可——它会自动被唤醒，无需记任何命令。</p>
+          <span class="say">"帮我检查这个 skill"</span>
+        </div>
       </div>
     </div>
   </div>
