@@ -76,7 +76,7 @@
   .hl h3{font-size:18px}
 
   /* scorecard demo */
-  .demo{background:var(--card); border:1px solid var(--card-bd); border-radius:24px; padding:36px; max-width:680px; margin:0 auto}
+  .demo{background:var(--card); border:1px solid var(--card-bd); border-radius:24px; padding:36px; max-width:760px; margin:0 auto}
   .demo-head{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:26px; padding-bottom:20px; border-bottom:1px dashed var(--card-bd)}
   .demo-head .name{font-size:20px; font-weight:700}
   .demo-head .grade{font-size:15px; color:var(--muted)}
@@ -90,6 +90,21 @@
   .f2{background:linear-gradient(90deg,#7c5cff,#22d3ee)}
   .f3{background:linear-gradient(90deg,#7c5cff,#fbbf24)}
   .f4{background:linear-gradient(90deg,#fb7185,#fbbf24)}
+  .diag{margin-top:28px; padding-top:24px; border-top:1px dashed var(--card-bd)}
+  .diag-title{font-size:14px; font-weight:700; color:var(--ink); margin-bottom:18px; display:flex; align-items:center; gap:8px}
+  .diag-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+  @media(max-width:620px){.diag-grid{grid-template-columns:1fr}}
+  .dim-head{display:flex; align-items:center; justify-content:space-between; font-size:15px; font-weight:700; margin-bottom:10px}
+  .dim-head .sc{font-size:13px; color:var(--muted); font-weight:500}
+  .find{display:flex; gap:8px; align-items:flex-start; font-size:13.5px; color:var(--muted); line-height:1.55; margin:7px 0}
+  .tag{flex:none; font-size:11px; font-weight:700; padding:1px 8px; border-radius:6px; line-height:1.6}
+  .t-bad{background:rgba(251,113,133,.16); color:#fda4af}
+  .t-warn{background:rgba(251,191,36,.16); color:#fcd34d}
+  .t-ok{background:rgba(52,211,153,.16); color:#6ee7b7}
+  .fixes{margin-top:24px; background:rgba(124,92,255,.1); border:1px solid rgba(124,92,255,.3); border-radius:14px; padding:18px 20px}
+  .fixes .fh{font-size:14px; font-weight:700; color:#c4b5ff; margin-bottom:10px}
+  .fixes ol{margin:0; padding-left:20px; color:var(--muted); font-size:14px; line-height:1.9}
+  .meta-line{margin-top:18px; font-size:13px; color:#7e88a8; text-align:center}
 
   /* steps */
   .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; counter-reset:s}
@@ -181,13 +196,53 @@
     <p class="lead reveal">满分 100，分 A+ 到 F。每一分都有原文佐证，还告诉你优先修哪几处。</p>
     <div class="demo reveal" id="demo">
       <div class="demo-head">
-        <div><div class="name">weekly-kpi-card</div><div class="grade">等级 B · 良好，有几处要改</div></div>
+        <div><div class="name">【技能】</div><div class="grade">等级 B · 良好，有几处要改</div></div>
         <div class="score-big" data-count="77">0</div>
       </div>
       <div class="bar-row"><div class="top"><b>📣 触发精确性</b><span>10 / 10</span></div><div class="track"><div class="fill f1" data-w="100"></div></div></div>
       <div class="bar-row"><div class="top"><b>🧭 理解精确性</b><span>24 / 30</span></div><div class="track"><div class="fill f2" data-w="80"></div></div></div>
       <div class="bar-row"><div class="top"><b>⚙️ 执行稳定性</b><span>28 / 35</span></div><div class="track"><div class="fill f3" data-w="80"></div></div></div>
       <div class="bar-row"><div class="top"><b>🧱 经济性</b><span>15 / 25</span></div><div class="track"><div class="fill f4" data-w="60"></div></div></div>
+
+      <div class="diag">
+        <div class="diag-title">🔍 逐维诊断（每条都带原文/实跑佐证）</div>
+        <div class="diag-grid">
+          <div class="diag-dim">
+            <div class="dim-head"><span>⚙️ 执行稳定性</span><span class="sc">28 / 35</span></div>
+            <div class="find"><span class="tag t-bad">严重</span><span>悬空引用：正文引用的模板文件在包里找不到，运行即断。</span></div>
+            <div class="find"><span class="tag t-bad">严重</span><span>跨文件矛盾：正文描述的字段，和模板实际结构对不上。</span></div>
+            <div class="find"><span class="tag t-warn">建议</span><span>确定性：生成结构化数据靠 AI 手拼，未用脚本兜底，重跑会漂。</span></div>
+            <div class="find"><span class="tag t-ok">通过</span><span>实跑：运行环境就绪、模板 JSON 解析校验通过。</span></div>
+          </div>
+          <div class="diag-dim">
+            <div class="dim-head"><span>🧭 理解精确性</span><span class="sc">24 / 30</span></div>
+            <div class="find"><span class="tag t-warn">建议</span><span>执行者歧义：引用文件没说该「读」、「跑脚本」还是「复制」。</span></div>
+            <div class="find"><span class="tag t-warn">建议</span><span>边界缺口：未定义空数据、接口失败时该怎么处理。</span></div>
+            <div class="find"><span class="tag t-ok">通过</span><span>流程清晰：步骤编号、分支条件、完成清单齐全。</span></div>
+          </div>
+          <div class="diag-dim">
+            <div class="dim-head"><span>🧱 经济性</span><span class="sc">15 / 25</span></div>
+            <div class="find"><span class="tag t-warn">建议</span><span>可移植：脚本写死了绝对路径，换台机器/换盘符就崩。</span></div>
+            <div class="find"><span class="tag t-warn">建议</span><span>分层：正文 300+ 行，详细规则未拆到 references/。</span></div>
+            <div class="find"><span class="tag t-ok">通过</span><span>接口：输入参数与输出格式都已声明清楚。</span></div>
+          </div>
+          <div class="diag-dim">
+            <div class="dim-head"><span>📣 触发精确性</span><span class="sc">10 / 10</span></div>
+            <div class="find"><span class="tag t-ok">通过</span><span>名称规范，描述同时含功能定义与触发短语。</span></div>
+            <div class="find"><span class="tag t-ok">通过</span><span>排除场景写明，与同类技能无语义重叠。</span></div>
+          </div>
+        </div>
+
+        <div class="fixes">
+          <div class="fh">🔧 前 3 优先修复（按提分潜力排序）</div>
+          <ol>
+            <li>补齐缺失的引用文件，消除悬空引用　<span style="opacity:.7">预计 +5</span></li>
+            <li>脚本路径改为跨平台写法，避免换机即崩　<span style="opacity:.7">预计 +4</span></li>
+            <li>给每个文件引用补上「执行者」，消除歧义　<span style="opacity:.7">预计 +3</span></li>
+          </ol>
+        </div>
+        <div class="meta-line">🔬 本次模拟推演：静态走查 8 步 · 白名单实跑 4 项 · 业务脚本仅静态分析不执行</div>
+      </div>
     </div>
   </div>
 </section>
