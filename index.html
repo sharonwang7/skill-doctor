@@ -101,15 +101,10 @@
   .say{display:inline-block; margin-top:12px; font-family:"SF Mono",Consolas,monospace; font-size:14px; background:rgba(34,211,238,.12); color:#7dd3fc; padding:6px 12px; border-radius:8px}
 
   /* install */
-  .install{max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:18px}
-  .ins-step{display:flex; gap:18px; align-items:flex-start; background:var(--card); border:1px solid var(--card-bd); border-radius:18px; padding:26px 28px}
-  .ins-n{flex:none; width:40px; height:40px; border-radius:12px; background:linear-gradient(100deg,var(--accent),var(--accent2)); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px; color:#fff}
-  .ins-step h3{font-size:18px; margin-bottom:6px}
-  .ins-step p{color:var(--muted); font-size:15px; margin-bottom:10px}
-  .ins-link{display:inline-block; color:#7dd3fc; text-decoration:none; font-size:14px; font-family:"SF Mono",Consolas,monospace}
-  .ins-link:hover{text-decoration:underline}
-  .code{font-family:"SF Mono",Consolas,monospace; font-size:13px; background:rgba(0,0,0,.28); border:1px solid var(--card-bd); border-radius:10px; padding:12px 14px; color:#a9b2d0; line-height:2}
-  .code b{color:#c4b5ff; font-weight:500}
+  .install-one{max-width:660px; margin:0 auto; text-align:center}
+  .url-box{display:flex; align-items:center; justify-content:center; gap:10px; background:var(--card); border:1px solid var(--card-bd); border-radius:16px; padding:22px 26px; margin-bottom:22px}
+  .url-box .ub-ico{font-size:22px}
+  .url-box .url{font-family:"SF Mono",Consolas,monospace; font-size:clamp(14px,2.4vw,18px); color:#7dd3fc; word-break:break-all}
 
   /* reveal */
   .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease}
@@ -214,32 +209,13 @@
   <div class="wrap">
     <p class="eyebrow reveal">动手用起来</p>
     <h2 class="reveal">怎么安装？</h2>
-    <p class="lead reveal">把 skill-doctor 文件夹放进你的 skills 目录，三步搞定。</p>
-    <div class="install">
-      <div class="ins-step reveal">
-        <div class="ins-n">1</div>
-        <div>
-          <h3>下载技能文件</h3>
-          <p>获取 <code>skill-doctor</code> 文件夹（含 SKILL.md 和 references/）。点开仓库 → Code → Download ZIP，解压即可。</p>
-          <a class="ins-link" href="https://github.com/sharonwang7/skill-doctor/tree/main/skill-doctor">github.com/sharonwang7/skill-doctor ↗</a>
-        </div>
+    <p class="lead reveal">不用手动拷文件——把下面这个网址丢给你的龙虾，让它帮你装好。</p>
+    <div class="install-one reveal">
+      <div class="url-box">
+        <span class="ub-ico">🦞</span>
+        <span class="url">https://github.com/sharonwang7/skill-doctor</span>
       </div>
-      <div class="ins-step reveal">
-        <div class="ins-n">2</div>
-        <div>
-          <h3>放进 skills 目录</h3>
-          <p>把整个 <code>skill-doctor</code> 文件夹拷到你的技能目录下：</p>
-          <div class="code"><b>Claude Code</b> ：~/.claude/skills/skill-doctor/<br><b>凡岛 / OpenClaw</b> ：&lt;安装目录&gt;/skills/skill-doctor/</div>
-        </div>
-      </div>
-      <div class="ins-step reveal">
-        <div class="ins-n">3</div>
-        <div>
-          <h3>开口就能用</h3>
-          <p>重开对话，把一个技能丢给它，说一句话即可——它会自动被唤醒，无需记任何命令。</p>
-          <span class="say">"帮我检查这个 skill"</span>
-        </div>
-      </div>
+      <span class="say">"帮我安装这个 skill：&lt;粘贴上面的网址&gt;"</span>
     </div>
   </div>
 </section>
