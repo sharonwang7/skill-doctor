@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Doctor 🩺 — 给你的 AI 技能做一次全面体检</title>
+<style>
+  :root{
+    --bg:#0b1020; --card:rgba(255,255,255,.06); --card-bd:rgba(255,255,255,.12);
+    --ink:#f2f5ff; --muted:#a9b2d0; --accent:#7c5cff; --accent2:#22d3ee; --good:#34d399; --warn:#fbbf24; --bad:#fb7185;
+    --maxw:1000px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,-apple-system,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.7; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  a{color:inherit}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative; text-align:center; padding:120px 24px 90px; overflow:hidden}
+  .hero .blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; z-index:0; animation:float 14s ease-in-out infinite}
+  .b1{width:480px;height:480px;background:#7c5cff;top:-160px;left:-120px}
+  .b2{width:420px;height:420px;background:#22d3ee;top:-80px;right:-140px;animation-delay:-5s}
+  .b3{width:360px;height:360px;background:#fb7185;bottom:-180px;left:40%;animation-delay:-9s}
+  @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(40px) scale(1.08)}}
+  .hero-inner{position:relative; z-index:1}
+  .pill{display:inline-block; font-size:14px; letter-spacing:.5px; padding:6px 16px; border:1px solid var(--card-bd);
+    border-radius:999px; background:var(--card); color:var(--muted); margin-bottom:28px; backdrop-filter:blur(6px)}
+  .logo{font-size:96px; line-height:1; margin-bottom:8px; animation:beat 2.6s ease-in-out infinite; display:inline-block}
+  @keyframes beat{0%,100%{transform:scale(1)}10%{transform:scale(1.12)}20%{transform:scale(1)}30%{transform:scale(1.08)}40%{transform:scale(1)}}
+  h1{font-size:clamp(40px,7vw,76px); font-weight:800; letter-spacing:-1px; line-height:1.05; margin-bottom:18px;
+    background:linear-gradient(100deg,#fff 10%,#c4b5ff 45%,#7dd3fc 80%); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .tagline{font-size:clamp(18px,2.4vw,24px); color:var(--muted); max-width:640px; margin:0 auto 14px}
+  .sub{font-size:16px; color:#7e88a8; max-width:560px; margin:0 auto 36px}
+  .cta{display:inline-flex; gap:14px; flex-wrap:wrap; justify-content:center}
+  .btn{font-size:16px; font-weight:600; padding:14px 28px; border-radius:14px; border:none; cursor:pointer; text-decoration:none; transition:transform .15s, box-shadow .2s}
+  .btn-main{background:linear-gradient(100deg,var(--accent),var(--accent2)); color:#fff; box-shadow:0 10px 30px rgba(124,92,255,.4)}
+  .btn-ghost{background:var(--card); color:var(--ink); border:1px solid var(--card-bd)}
+  .btn:hover{transform:translateY(-3px)}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:72px 0}
+  .eyebrow{text-align:center; color:var(--accent2); font-weight:700; letter-spacing:2px; font-size:13px; text-transform:uppercase; margin-bottom:10px}
+  h2{text-align:center; font-size:clamp(28px,4vw,40px); font-weight:800; letter-spacing:-.5px; margin-bottom:14px}
+  .lead{text-align:center; color:var(--muted); max-width:620px; margin:0 auto 48px; font-size:17px}
+
+  /* what-is */
+  .whatis{display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center}
+  @media(max-width:760px){.whatis{grid-template-columns:1fr}}
+  .speech{background:var(--card); border:1px solid var(--card-bd); border-radius:20px; padding:28px 30px}
+  .speech p{margin-bottom:14px} .speech p:last-child{margin-bottom:0}
+  .speech .q{color:var(--accent2); font-weight:700}
+  .speech .a{color:var(--ink)}
+
+  /* dimension cards */
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px}
+  .card{background:var(--card); border:1px solid var(--card-bd); border-radius:20px; padding:28px 26px; transition:transform .25s, border-color .25s, background .25s}
+  .card:hover{transform:translateY(-6px); border-color:rgba(124,92,255,.6); background:rgba(124,92,255,.08)}
+  .card .ico{font-size:40px; margin-bottom:14px}
+  .card h3{font-size:20px; font-weight:700; margin-bottom:6px}
+  .card .w{font-size:13px; color:var(--accent2); font-weight:700; margin-bottom:10px}
+  .card p{font-size:15px; color:var(--muted)}
+
+  /* highlights */
+  .hl{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px}
+  .hl .card{display:flex; gap:18px; align-items:flex-start}
+  .hl .ico{font-size:34px; margin:0}
+  .hl h3{font-size:18px}
+
+  /* scorecard demo */
+  .demo{background:var(--card); border:1px solid var(--card-bd); border-radius:24px; padding:36px; max-width:680px; margin:0 auto}
+  .demo-head{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:26px; padding-bottom:20px; border-bottom:1px dashed var(--card-bd)}
+  .demo-head .name{font-size:20px; font-weight:700}
+  .demo-head .grade{font-size:15px; color:var(--muted)}
+  .score-big{font-size:64px; font-weight:800; background:linear-gradient(100deg,#7dd3fc,#34d399); -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1}
+  .bar-row{margin-bottom:20px}
+  .bar-row .top{display:flex; justify-content:space-between; font-size:15px; margin-bottom:8px}
+  .bar-row .top b{font-weight:700} .bar-row .top span{color:var(--muted)}
+  .track{height:12px; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden}
+  .fill{height:100%; width:0; border-radius:999px; transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+  .f1{background:linear-gradient(90deg,#34d399,#22d3ee)}
+  .f2{background:linear-gradient(90deg,#7c5cff,#22d3ee)}
+  .f3{background:linear-gradient(90deg,#7c5cff,#fbbf24)}
+  .f4{background:linear-gradient(90deg,#fb7185,#fbbf24)}
+
+  /* steps */
+  .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; counter-reset:s}
+  .step{background:var(--card); border:1px solid var(--card-bd); border-radius:20px; padding:30px 26px; position:relative}
+  .step::before{counter-increment:s; content:counter(s); position:absolute; top:-18px; left:26px; width:42px; height:42px; border-radius:12px;
+    background:linear-gradient(100deg,var(--accent),var(--accent2)); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px; color:#fff}
+  .step h3{margin:14px 0 8px; font-size:18px}
+  .step p{color:var(--muted); font-size:15px}
+  .step .say{display:inline-block; margin-top:12px; font-family:"SF Mono",Consolas,monospace; font-size:14px; background:rgba(34,211,238,.12); color:#7dd3fc; padding:6px 12px; border-radius:8px}
+
+  /* reveal */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity:1; transform:none}
+
+  footer{text-align:center; padding:56px 24px; color:#6b7494; font-size:14px; border-top:1px solid var(--card-bd)}
+  footer .big{font-size:20px; color:var(--ink); font-weight:700; margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="hero-inner wrap">
+    <span class="pill">AI 技能质量医生 · v2.0</span>
+    <div class="logo">🩺</div>
+    <h1>Skill Doctor</h1>
+    <p class="tagline">给你的 AI 技能做一次全面体检</p>
+    <p class="sub">不只是看一眼说明书——它会读遍每个文件、真的跑一遍，告诉你哪儿有病、怎么治，还能一句话帮你把"半成品"补成完整技能包。</p>
+    <div class="cta">
+      <a class="btn btn-main" href="#how">怎么用 →</a>
+      <a class="btn btn-ghost" href="#score">看一份体检报告</a>
+    </div>
+  </div>
+</header>
+
+<section id="what">
+  <div class="wrap">
+    <p class="eyebrow reveal">先说人话</p>
+    <h2 class="reveal">这是干嘛的？</h2>
+    <p class="lead reveal">如果"技能（Skill）"是你写给 AI 的一份操作说明书，那 Skill Doctor 就是给这份说明书看病的医生。</p>
+    <div class="whatis">
+      <div class="speech reveal">
+        <p><span class="q">🤔 什么是 Skill？</span><br><span class="a">一份告诉 AI"遇到这种活儿该怎么干"的说明书。写好了，AI 自动照做；写砸了，AI 要么想不起来用、要么干错。</span></p>
+        <p><span class="q">😵 常见的"病"？</span><br><span class="a">触发词没写对没人叫得动它；步骤含糊 AI 全靠猜；附带的脚本路径写死了换台电脑就崩；说明书 300 行没人维护得动。</span></p>
+        <p><span class="q">🩺 Doctor 怎么治？</span><br><span class="a">4 个维度打分体检 → 指出问题 → 你说一句"优化"，它直接帮你改好、缺的部分补齐。</span></p>
+      </div>
+      <div class="grid reveal">
+        <div class="card"><div class="ico">📣</div><h3>触发精确性</h3><div class="w">该不该被叫到</div><p>名字和描述写对，AI 才会在对的时机自动用它。</p></div>
+        <div class="card"><div class="ico">🧭</div><h3>理解精确性</h3><div class="w">AI 会不会猜错</div><p>步骤、分支、引用都清清楚楚，AI 不用瞎猜。</p></div>
+        <div class="card"><div class="ico">⚙️</div><h3>执行稳定性</h3><div class="w">到底跑不跑得通</div><p>文件齐不齐、脚本崩不崩、输出对不对——真跑一遍验。</p></div>
+        <div class="card"><div class="ico">🧱</div><h3>经济性</h3><div class="w">好不好长期用</div><p>不写死、能换机器、结构清爽，方便以后维护和复用。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <p class="eyebrow reveal">凭什么比别的检查靠谱</p>
+    <h2 class="reveal">三件别人不做的事</h2>
+    <p class="lead reveal">大多数检查只读说明书正文。Skill Doctor 把整个技能包当一个整体来体检。</p>
+    <div class="hl">
+      <div class="card reveal"><div class="ico">🗂️</div><div><h3>审到每一个文件</h3><p>不只看 SKILL.md，连脚本、模板、参考文档全部翻开，抓出"说明书说一套、文件做另一套"的矛盾和找不到的引用。</p></div></div>
+      <div class="card reveal"><div class="ico">▶️</div><div><h3>真的跑一遍</h3><p>不是"看着像能跑"——它会模拟执行、对安全命令实跑取真实输出，连换台电脑会不会崩都帮你试出来。</p></div></div>
+      <div class="card reveal"><div class="ico">📦</div><div><h3>一句"优化"自动成包</h3><p>丢给它一个光杆说明书，它能自动拆成 脚本+模板+参考+精简正文 的完整目录。你只看结果确认，改坏了也不怕——默认新建副本不覆盖。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="score">
+  <div class="wrap">
+    <p class="eyebrow reveal">长这样</p>
+    <h2 class="reveal">一份体检报告</h2>
+    <p class="lead reveal">满分 100，分 A+ 到 F。每一分都有原文佐证，还告诉你优先修哪几处。</p>
+    <div class="demo reveal" id="demo">
+      <div class="demo-head">
+        <div><div class="name">weekly-kpi-card</div><div class="grade">等级 B · 良好，有几处要改</div></div>
+        <div class="score-big" data-count="77">0</div>
+      </div>
+      <div class="bar-row"><div class="top"><b>📣 触发精确性</b><span>10 / 10</span></div><div class="track"><div class="fill f1" data-w="100"></div></div></div>
+      <div class="bar-row"><div class="top"><b>🧭 理解精确性</b><span>24 / 30</span></div><div class="track"><div class="fill f2" data-w="80"></div></div></div>
+      <div class="bar-row"><div class="top"><b>⚙️ 执行稳定性</b><span>28 / 35</span></div><div class="track"><div class="fill f3" data-w="80"></div></div></div>
+      <div class="bar-row"><div class="top"><b>🧱 经济性</b><span>15 / 25</span></div><div class="track"><div class="fill f4" data-w="60"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow reveal">零门槛</p>
+    <h2 class="reveal">怎么用？说句话就行</h2>
+    <p class="lead reveal">不用记命令、不用配环境。把技能丢给它，用大白话提需求。</p>
+    <div class="steps">
+      <div class="step reveal"><h3>把技能交给它</h3><p>发一个 SKILL.md，或者整个技能文件夹。</p></div>
+      <div class="step reveal"><h3>说你想干嘛</h3><p>想体检就说"检查"，想让它帮你改就说"优化"。它自己判断该怎么做。</p><span class="say">"帮我检查这个 skill"</span></div>
+      <div class="step reveal"><h3>看结果确认</h3><p>拿到打分报告，或改好的完整技能包。满意点头，不满意再调。</p><span class="say">"优化我的 skill"</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="big">🩺 Skill Doctor</div>
+  <p>给每一个 AI 技能，一份看得懂、改得动、跑得通的体检报告。</p>
+  <p style="margin-top:10px;opacity:.6">本页为单文件离线网页 · 双击即可在任意浏览器打开 · 可自由分享</p>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((es)=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const demo = document.getElementById('demo');
+  const dio = new IntersectionObserver((es)=>{
+    es.forEach(e=>{
+      if(!e.isIntersecting) return;
+      document.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w+'%');
+      const el = demo.querySelector('.score-big'); const target=+el.dataset.count; let n=0;
+      const t=setInterval(()=>{ n+=2; if(n>=target){n=target;clearInterval(t);} el.textContent=n; },24);
+      dio.unobserve(demo);
+    });
+  }, {threshold:.4});
+  dio.observe(demo);
+</script>
+</body>
+</html>
