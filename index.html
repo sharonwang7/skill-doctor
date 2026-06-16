@@ -69,6 +69,28 @@
   .card .w{font-size:13px; color:var(--accent2); font-weight:700; margin-bottom:10px}
   .card p{font-size:15px; color:var(--muted)}
 
+  /* dimension pipeline + detail */
+  .pipe{display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; max-width:780px; margin:0 auto 44px}
+  .pipe .node{background:var(--card); border:1px solid var(--card-bd); border-radius:12px; padding:10px 18px; text-align:center}
+  .pipe .node b{font-size:15px; font-weight:700; color:var(--ink)}
+  .pipe .node small{display:block; font-size:11px; color:var(--muted); margin-top:3px}
+  .pipe .arr{color:var(--accent2); font-size:20px; font-weight:700}
+  @media(max-width:600px){.pipe .arr{transform:rotate(90deg)}}
+  .dims{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+  @media(max-width:740px){.dims{grid-template-columns:1fr}}
+  .dimc{background:var(--card); border:1px solid var(--card-bd); border-left:4px solid var(--dc); border-radius:16px; padding:26px; transition:transform .25s, background .25s}
+  .dimc:hover{transform:translateY(-5px); background:rgba(255,255,255,.04)}
+  .dimc .dh{display:flex; align-items:center; gap:12px; margin-bottom:8px}
+  .dimc .dh .di{font-size:30px}
+  .dimc .dh h3{font-size:20px; font-weight:700}
+  .dimc .wbadge{margin-left:auto; font-size:14px; font-weight:700; color:var(--dc)}
+  .dimc .layer{display:inline-block; font-size:12px; color:var(--muted); background:rgba(255,255,255,.05); border:1px solid var(--card-bd); border-radius:6px; padding:3px 10px; margin-bottom:14px}
+  .dimc .row{display:flex; gap:10px; font-size:14.5px; margin:9px 0; line-height:1.55}
+  .dimc .row .k{flex:none; width:40px; color:var(--dc); font-weight:700}
+  .dimc .row.fail .v{color:var(--muted)}
+  .dimc .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px}
+  .dimc .chip{font-size:12px; color:var(--muted); background:rgba(255,255,255,.05); border:1px solid var(--card-bd); border-radius:999px; padding:4px 12px}
+
   /* highlights */
   .hl{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px}
   .hl .card{display:flex; gap:18px; align-items:flex-start}
@@ -151,28 +173,71 @@
     <p class="eyebrow reveal">先说人话</p>
     <h2 class="reveal">这是干嘛的？</h2>
     <p class="lead reveal">如果"技能（Skill）"是你写给 AI 的一份操作说明书，那 Skill Doctor 就是给这份说明书看病的医生。</p>
-    <div class="whatis">
-      <div class="faq reveal">
-        <div class="faq-item">
-          <div class="faq-q"><span class="qi">🤔</span>什么是 Skill？</div>
-          <div class="faq-a">一份告诉 AI"遇到这种活儿该怎么干"的说明书。写好了 AI 自动照做；写砸了，AI 要么想不起来用、要么干错。</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q"><span class="qi">😵</span>常见的"病"？</div>
-          <div class="faq-a">触发词没写对，没人叫得动它；步骤含糊，AI 全靠猜；脚本路径写死，换台电脑就崩；说明书 300 行，没人维护得动。</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q"><span class="qi">🩺</span>Doctor 怎么治？</div>
-          <div class="faq-a">4 个维度打分体检 → 指出问题 → 你说一句"优化"，它直接帮你改好、缺的部分补齐。</div>
-        </div>
+    <div class="faq reveal" style="max-width:680px;margin:0 auto">
+      <div class="faq-item">
+        <div class="faq-q"><span class="qi">🤔</span>什么是 Skill？</div>
+        <div class="faq-a">一份告诉 AI"遇到这种活儿该怎么干"的说明书。写好了 AI 自动照做；写砸了，AI 要么想不起来用、要么干错。</div>
       </div>
-      <div class="grid reveal">
-        <div class="card"><div class="ico">📣</div><h3>触发精确性</h3><div class="w">能不能被唤醒</div><p>名字和描述写对，AI 才会在对的时机自动用它。</p></div>
-        <div class="card"><div class="ico">🧭</div><h3>理解精确性</h3><div class="w">AI 会不会猜错</div><p>步骤、分支、引用都清清楚楚，AI 不用瞎猜。</p></div>
-        <div class="card"><div class="ico">⚙️</div><h3>执行稳定性</h3><div class="w">到底跑不跑得通</div><p>文件齐不齐、脚本崩不崩、输出对不对——真跑一遍验。</p></div>
-        <div class="card"><div class="ico">🧱</div><h3>经济性</h3><div class="w">能不能更多人复用</div><p>不写死、能换机器、结构清爽，方便以后维护和复用。</p></div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="qi">😵</span>常见的"病"？</div>
+        <div class="faq-a">触发词没写对，没人叫得动它；步骤含糊，AI 全靠猜；脚本路径写死，换台电脑就崩；说明书 300 行，没人维护得动。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="qi">🩺</span>Doctor 怎么治？</div>
+        <div class="faq-a">4 个维度打分体检 → 指出问题 → 你说一句"优化"，它直接帮你改好、缺的部分补齐。</div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="dims">
+  <div class="wrap">
+    <p class="eyebrow reveal">评估维度</p>
+    <h2 class="reveal">一个技能，要过四道关</h2>
+    <p class="lead reveal">从被 AI 找到，到真正帮上忙、还能传给别人——每道关对应一个维度。卡在哪一关，就是哪个维度出了问题。</p>
+
+    <div class="pipe reveal">
+      <div class="node"><b>① 被找到</b><small>触发精确性</small></div>
+      <div class="arr">→</div>
+      <div class="node"><b>② 被读懂</b><small>理解精确性</small></div>
+      <div class="arr">→</div>
+      <div class="node"><b>③ 被跑通</b><small>执行稳定性</small></div>
+      <div class="arr">→</div>
+      <div class="node"><b>④ 能复用</b><small>经济性</small></div>
+    </div>
+
+    <div class="dims">
+      <div class="dimc reveal" style="--dc:#22d3ee">
+        <div class="dh"><span class="di">📣</span><h3>触发精确性</h3><span class="wbadge">10 分</span></div>
+        <span class="layer">评估层 · 名字与描述（技能的"广告位"）</span>
+        <div class="row"><span class="k">含义</span><span class="v">让 AI 在对的时机自动认出、并选用这个技能。</span></div>
+        <div class="row fail"><span class="k">失分</span><span class="v">写不准 → AI 根本想不起来用它，技能等于不存在。</span></div>
+        <div class="chips"><span class="chip">名称规范</span><span class="chip">触发短语</span><span class="chip">排除场景</span></div>
+      </div>
+      <div class="dimc reveal" style="--dc:#a78bff">
+        <div class="dh"><span class="di">🧭</span><h3>理解精确性</h3><span class="wbadge">30 分</span></div>
+        <span class="layer">评估层 · 指令正文（AI 要读的说明书）</span>
+        <div class="row"><span class="k">含义</span><span class="v">AI 读完说明，能不能不靠猜就准确照做。</span></div>
+        <div class="row fail"><span class="k">失分</span><span class="v">含糊 → AI 误解意图，步骤走偏、不知该读模板还是跑脚本。</span></div>
+        <div class="chips"><span class="chip">目标与流程</span><span class="chip">分支与边界</span><span class="chip">引用执行语义</span></div>
+      </div>
+      <div class="dimc reveal" style="--dc:#34d399">
+        <div class="dh"><span class="di">⚙️</span><h3>执行稳定性</h3><span class="wbadge">35 分</span></div>
+        <span class="layer">评估层 · 文件·脚本·环境（跑起来的底座）</span>
+        <div class="row"><span class="k">含义</span><span class="v">整包装配起来，能不能稳定跑出正确结果。</span></div>
+        <div class="row fail"><span class="k">失分</span><span class="v">底座坏 → 引用文件缺失、脚本崩、输出忽好忽坏。</span></div>
+        <div class="chips"><span class="chip">跨文件一致</span><span class="chip">确定性保障</span><span class="chip">真跑验证</span><span class="chip">可验证</span></div>
+      </div>
+      <div class="dimc reveal" style="--dc:#fbbf24">
+        <div class="dh"><span class="di">🧱</span><h3>经济性</h3><span class="wbadge">25 分</span></div>
+        <span class="layer">评估层 · 整体设计</span>
+        <div class="row"><span class="k">含义</span><span class="v">换台机器、换个人，还能不能用、好不好维护。</span></div>
+        <div class="row fail"><span class="k">失分</span><span class="v">写死又臃肿 → 只能自己用一次，别人接不动。</span></div>
+        <div class="chips"><span class="chip">分层归位</span><span class="chip">不写死</span><span class="chip">信息精简</span></div>
+      </div>
+    </div>
+
+    <p class="lead reveal" style="margin-top:38px;font-size:15px;color:#7e88a8">权重 10 / 30 / 35 / 25 —— 越靠"能不能跑通、能不能复用"，分量越重。</p>
   </div>
 </section>
 
